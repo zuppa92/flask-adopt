@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Agency</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Pet Adoption Agency</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-success" role="alert">
+                    {% for category, message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <a href="{{ url_for('show_add_form') }}" class="btn btn-primary mb-4">Add a New Pet</a>
+
+        <h2>Available Pets</h2>
+        <div class="row">
+            {% for pet in available_pets %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        {% if pet.photo_url %}
+                            <img src="{{ pet.photo_url }}" class="card-img-top" alt="{{ pet.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/150" class="card-img-top" alt="No photo available">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{{ url_for('show_edit_pet', pet_id=pet.id) }}">{{ pet.name }}</a></h5>
+                            <p class="card-text"><strong>Species:</strong> {{ pet.species }}</p>
+                            <p class="card-text"><strong>Age:</strong> {{ pet.age }}</p>
+                            <p class="card-text"><strong>Notes:</strong> {{ pet.notes }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <h2>No Longer Available Pets</h2>
+        <div class="row">
+            {% for pet in not_available_pets %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        {% if pet.photo_url %}
+                            <img src="{{ pet.photo_url }}" class="card-img-top" alt="{{ pet.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/150" class="card-img-top" alt="No photo available">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{{ url_for('show_edit_pet', pet_id=pet.id) }}">{{ pet.name }}</a></h5>
+                            <p class="card-text"><strong>Species:</strong> {{ pet.species }}</p>
+                            <p class="card-text"><strong>Age:</strong> {{ pet.age }}</p>
+                            <p class="card-text"><strong>Notes:</strong> {{ pet.notes }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
